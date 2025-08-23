@@ -3,33 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0;100;200;300;400;500;600;700&display=swap">
+
+    <link rel="stylesheet" href="./styles.css/reset.css">
+    <link rel="stylesheet" href="./styles.css/index.css">
+    
     <title>Asistente de seguridad</title>
 </head>
 <body>
     <header>
-        <a href="index.html">
-            <img src="./Imagenes/LOGO HENRY.svg" alt="Logo main de la aplicación, asistente de seguridad" />
-        </a>
+        <img src="./Imagenes/LOGO HENRY.svg" alt="Logo main de la aplicación, asistente de seguridad" />
         <nav>
-            <ul>
+            <ul class="nav-links">
                 <li><a href="../01.HTML&CSS/index.html">Home</a></li>
                 <li><a href="../build/html/generarContrasena.html">Generar contraseña</a></li>
                 <li><a href="../build/html/cajaFuerte.html">Caja fuerte</a></li>
                 <li><a href="../build/html/monitoreoActividad.html">Monitor de actividad</a></li>
                 <li><a href="../build/html/gestionUsuarios.html">Gestión de usuarios</a></li>
             </ul>
+        
         </nav>
     </header>
 
     <main>
-        <section>
-            <p>Seguridad personalizada y efectiva.</p>
-            <h1>Henry Security SAS</h1>
-            <p>Protegemos tus datos, impulsamos tu confianza.</p>
-        </section>
-        <section>
-            <img src="./Imagenes/LOGO PRINCIPAL.svg" alt="Esta es la imagen del main de la landing page, asistente de seguridad" />
-        </section>
+        <section class="main-section">
+         <div class="main-section-wrapper">
+         <article class="main-content">
+         <span>Seguridad personalizada y efectiva</span>
+         <div class="main-title">
+                 <h1>Henry</h1>
+                 <h2>Security SAS</h2>
+         </div>
+            <p>Protegemos tus datos, impulsamos <br>tu confianza</p>
+         </article>
+         <figure>
+                <img src="./Imagenes/LOGO PRINCIPAL.svg" alt="Esta es la imagen del main de la landing page, asistente de seguridad" />
+          </figure>
+            </div>
+            </section>
     </main>
 </body>
 </html>
