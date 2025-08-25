@@ -1,0 +1,118 @@
+/*
+ * RESET CSS
+ * Elimina estilos predeterminados del navegador
+ */
+
+/* Box sizing */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* Resetear márgenes y padding */
+body, h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, applet, article, aside,
+audio, b, big, blockquote, body, button, canvas,
+caption, center, cite, code, dd, del, details, dfn,
+dialog, div, dl, dt, em, embed, fieldset, figcaption,
+figure, footer, form, h1, h2, h3, h4, h5, h6, header,
+hgroup, hr, i, iframe, img, input, ins, kbd, label,
+legend, li, main, map, mark, menu, menuitem, meter,
+nav, noindex, noscript, object, ol, optgroup, option,
+output, p, param, picture, pre, progress, q, rp, rt,
+ruby, s, samp, script, section, select, small, source,
+span, strike, strong, style, sub, summary, sup, svg,
+table, tbody, td, template, textarea, tfoot, th, thead,
+time, tr, track, u, ul, var, video, wbr, xmp {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+
+/* HTML5 display roles */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+main,
+menu,
+nav,
+section {
+  display: block;
+}
+
+/* Body */
+body {
+  line-height: 1;
+}
+
+/* Listas */
+ol, ul {
+  list-style: none;
+}
+
+/* Tablas */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* Imágenes y media */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Enlaces */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Textos */
+blockquote, q {
+  quotes: none;
+}
+
+blockquote::before, blockquote::after,
+q::before, q::after {
+  content: '';
+}
+
+/* Tipografía */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Evitar overflow por defecto */
+html {
+  overflow-x: hidden;
+}
+
+/* Evitar problemas de anchura en elementos inline */
+input[type="text"],
+input[type="email"],
+input[type="url"],
+input[type="password"],
+input[type="search"],
+textarea {
+  width: 100%;
+  resize: vertical;
+  font-family: inherit;
+}
+
+button {
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  color: inherit;
+  font: inherit;
+}

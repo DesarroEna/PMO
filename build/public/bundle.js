@@ -5,9 +5,76 @@
 /*!***********************************************!*\
   !*** ../02. JS Bases/generadorContrasenas.js ***!
   \***********************************************/
-/***/ (() => {
+/***/ ((module) => {
 
-throw new Error("Module parse failed: Unexpected token (18:6)\nYou may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders\n|   var caracteresDisponibles = null;\n| \n>   if () {\n|       \n|   }");
+function checkLongitud(longitud) {
+  /* TU CODIGO */
+if (!longitud) {
+  return "debe ingresar la longitud";
+}
+
+if (typeof longitud != "string") {
+  return "La longitud recibida no es valida";
+}
+
+  if (longitud > 3) {
+    return "La longitud debe ser mayor o igual que 3";
+  }
+
+if (longitud > 10) {
+  return "La longitud debe ser mayor o igual que 10";
+}
+
+return longitud;
+
+}
+
+function generarContrasena(longitud, incluirEspeciales, incluirNumeros, incluirMayusculas ) {
+  /* TU CODIGO */
+
+  var letras = 'abcdefghijklmnopqrstuvwxyz';
+
+  var numeros = '0123456789';
+
+  var especiales = '!@#$%^&*()_+-=[]{}|;:,.<>?';
+
+  var letrasMayusculas = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+  var caracteresDisponibles = letras;
+
+  if (incluirEspeciales) {
+      caracteresDisponibles += especiales;
+  }
+
+  if (incluirNumeros) {
+      caracteresDisponibles += numeros;
+  }
+
+  if (incluirMayusculas) {
+      caracteresDisponibles += letrasMayusculas;
+  }
+
+  var contrasena = '';
+
+  if (checkLongitud(longitud)) {
+    for (let i = 0; i < longitud; i++) {
+      let valorAleatorio = Math.random();
+      let indice = valorAleatorio * caracteresDisponibles.length;
+      let indiceEntero = Math.floor(indice);
+      let caracter = caracteresDisponibles[indiceEntero];
+      contrasena += caracter;
+    }
+  }
+
+  return "Contraseña generada: " + contrasena;
+}
+
+// <------- NO TOCAR -------->
+module.exports = {
+  checkLongitud,
+  generarContrasena,
+};
+
 
 /***/ }),
 
@@ -17,30 +84,112 @@ throw new Error("Module parse failed: Unexpected token (18:6)\nYou may need an a
   \**************************************/
 /***/ ((module) => {
 
-function cajaFuerte(codigoSecreto, cantidadIntentos){
-  /* TU CODIGO */
-  
+function validarNumerosRepetidos(codigo) {
+  const digitos = codigo.toString();
+  const vistos = {};
+
+  for (let i = 0; i < digitos.length; i++) {
+    const num = digitos[i];
+    if (vistos[num]) {
+      return true; // Número repetido encontrado
+    }
+    vistos[num] = true;
+  }
+
+  return false; // No hay números repetidos
 }
 
-function validarNumerosRepetidos(codigo){
-  /* TU CODIGO */
-  
+function cajaFuerte(codigoSecreto, cantidadIntentos) {
+  const codigoStr = codigoSecreto.toString();
+
+  // a. Validar que tenga exactamente 4 dígitos
+  if (codigoStr.length !== 4) {
+    return "El codigo debe tener exactamente 4 digitos";
+  }
+
+  // b. Validar que solo contenga números (usando bucle for)
+  for (let i = 0; i < codigoStr.length; i++) {
+    const char = codigoStr[i];
+    if (char < '0' || char > '9') {
+      return "El codigo secreto solo puede estar conformado por numeros";
+    }
+  }
+
+  // c. Validar que no tenga números repetidos
+  if (validarNumerosRepetidos(codigoSecreto)) {
+    return "el codigo no puede tener numeros repetidos";
+  }
+
+  // d. Validar intentos (entre 1 y 5 inclusive)
+  if (cantidadIntentos < 1 || cantidadIntentos > 5) {
+    return "Solo se permite una cantidad de intentos mayor a 0 y menor a 6";
+  }
+
+  // e. Si todo es válido, retornar código + intentos como string
+  return `${codigoStr}-${cantidadIntentos}`;
 }
 
-// <------- Contador de intentos -----> no modificar
-var contadorIntentos = 1
+// <------ Contador de intentos -------> no modificar
+var contadorIntentos = 1;
 
-function desbloquearCajaFuerte(codigoSecreto, cantidadIntentos, codigoDesbloqueo){
-  /* TU CODIGO */
-  
+function desbloquearCajaFuerte(codigoSecreto, cantidadIntentos, codigoDesbloqueo) {
+  const codigoDesbloqueoStr = codigoDesbloqueo.toString();
+
+  // a. Validar que tenga exactamente 4 dígitos
+  if (codigoDesbloqueoStr.length !== 4) {
+    return "El codigo debe tener exactamente 4 digitos";
+  }
+
+  // b. Validar que solo contenga números (usando bucle for)
+  for (let i = 0; i < codigoDesbloqueoStr.length; i++) {
+    const char = codigoDesbloqueoStr[i];
+    if (char < '0' || char > '9') {
+      return "El codigo de desbloqueo solo puede estar conformado por numeros";
+    }
+  }
+
+  // c. Validar que no tenga números repetidos
+  if (validarNumerosRepetidos(codigoDesbloqueo)) {
+    return "el codigo no puede tener numeros repetidos";
+  }
+
+  // d. Comparar con código secreto
+  if (codigoDesbloqueo === codigoSecreto) {
+    contadorIntentos++; // Aumentar contador antes de retornar
+    return `Acceso concedido despues de: ${contadorIntentos} intentos`;
+  }
+
+  // e. Código incorrecto → dar pistas con switch
+  switch (true) {
+    case codigoDesbloqueo % 2 === 0:
+      console.log("el codigo es divisible x 2");
+      break;
+    case codigoDesbloqueo > codigoSecreto:
+      console.log("Codigo incorrecto demasiado alto");
+      break;
+    default:
+      console.log("codigo incorrecto");
+      break;
+  }
+
+  // f. Aumentar contador de intentos
+  contadorIntentos++;
+
+  // g. Verificar si se agotaron los intentos
+  if (contadorIntentos >= cantidadIntentos) {
+    return "Acceso denegado. Se agotaron los intentos";
+  }
+
+  // Si aún quedan intentos, no retorna nada (sigue intentando)
+  return null;
 }
 
-// <------- NO TOCAR -------->
+// <------ NO TOCAR -------->
 module.exports = {
   cajaFuerte,
   desbloquearCajaFuerte,
   validarNumerosRepetidos
-}
+};
 
 /***/ }),
 
