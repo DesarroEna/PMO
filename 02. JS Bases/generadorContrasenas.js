@@ -47,69 +47,12 @@ function generarContrasena(longitud, incluirEspeciales, incluirNumeros, incluirM
 
   var contraseña = "";
 
-  if (longitud >=3) {
-    const indicel = Math.floor(Math.random() * caracteresDisponibles.length);
-    const caracter1 = caracteresDisponibles.charAt(indice1)
-    contraseña = contraseña + caracter1;
-
-    const indice2 = Math.floor(Math.random() * caracteresDisponibles.length);
-    const caracter2 = caracteresDisponibles.charAt(indice2)
-    contraseña = contraseña + caracter2;
-
-    const indice3 = Math.floor(Math.random() * caracteresDisponibles.length);
-    const caracter3 = caracteresDisponibles.charAt(indice3)
-    contraseña = contraseña + caracter3;
-
+  for (var i = 0; i < longitud; i++) {
+    const indice = Math.floor(Math.random() * caracteresDisponibles.length);
+    const caracter = caracteresDisponibles.charAt(indice)
+    contraseña = contraseña + caracter;
   }
-   
-    if (longitud >=4) {
-    const indice4 = Math.floor(Math.random() * caracteresDisponibles.length);
-    const caracter4 = caracteresDisponibles.charAt(indice4)
-    contraseña = contraseña + caracter1;
 
- }
-
-     if (longitud >=5) {
-    const indice4 = Math.floor(Math.random() * caracteresDisponibles.length);
-    const caracter5 = caracteresDisponibles.charAt(indice5)
-    contraseña = contraseña + caracter1;
-
- }
-  
-     if (longitud >=6) {
-    const indice6 = Math.floor(Math.random() * caracteresDisponibles.length);
-    const caracter6 = caracteresDisponibles.charAt(indice6)
-    contraseña = contraseña + caracter1;
-
- }
-
-     if (longitud >=7) {
-    const indice7 = Math.floor(Math.random() * caracteresDisponibles.length);
-    const caracter7 = caracteresDisponibles.charAt(indice7)
-    contraseña = contraseña + caracter7;
-
- }
-
-     if (longitud >=8) {
-    const indice8 = Math.floor(Math.random() * caracteresDisponibles.length);
-    const caracter8 = caracteresDisponibles.charAt(indice8)
-    contraseña = contraseña + caracter8;
-
- }
-
-     if (longitud >=9) {
-    const indice9 = Math.floor(Math.random() * caracteresDisponibles.length);
-    const caracter9 = caracteresDisponibles.charAt(indice9)
-    contraseña = contraseña + caracter9;
-
- }
-
-     if (longitud >=10) {
-    const indice10 = Math.floor(Math.random() * caracteresDisponibles.length);
-    const caracter10 = caracteresDisponibles.charAt(indice10)
-    contraseña = contraseña + caracter10;
-
- }
 
   return "Contraseña generada: " + contraseña;
 }
