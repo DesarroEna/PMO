@@ -16,7 +16,7 @@ var asistente = {
     } else if (opcion === "antiguedad") {
       return perfiles.map((perfil) => perfil.antiguedad);
     }
-  },
+  };
       
     },
     

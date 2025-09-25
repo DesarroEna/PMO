@@ -36,13 +36,9 @@ function validarNumerosRepetidos(codigo) {
 
   
   }
-
-
-
 var contadorIntentos = 1;
 
 function desbloquearCajaFuerte(codigoSecreto, cantidadIntentos, codigoDesbloqueo) {
-
  if (codigoDesbloqueo.length !== 4) {
     return "El codigo debe tener exactamente 4 digitos";
   }    

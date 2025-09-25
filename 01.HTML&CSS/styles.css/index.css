@@ -1,94 +1,184 @@
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background-color: #ffffff;
+  color: #222222;
+}
+
+/* ===== HEADER ===== */
 header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: #F1F1F1;
-    padding: 0px 65px;
-    height: 89px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f7f7f7; /* un poco más claro que #f1f1f1 */
+  padding: 0 65px;
+  height: 89px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05); /* ligero sombreado */
+}
 
-
+header img {
+  height: 48px;
 }
 
 .nav-links {
-    display:flex;
-    list-style: none;
-    gap: 22px;
-
-
-
-
+  display: flex;
+  list-style: none;
+  gap: 30px; /* más separación como en Figma */
+  margin: 0;
+  padding: 0;
 }
 
-.nav-links > li > a {
-   font-family: "Poppins", sans-serif;
-   font-weight: 500px;
-   font-size: 16px;
-   padding: 4px 16px;
-   color:#222222;
-   transition: 0.3s;
-   border-radius: 9px;
+.nav-links a {
+  font-weight: 500;
+  font-size: 16px;
+  color: #222222;
+  text-decoration: none;
+  padding: 6px 18px;
+  border-radius: 9px;
+  transition: background-color 0.3s, color 0.3s;
 }
 
-.nav-links > li > a:hover {
-    padding: 4px 16px;
-    background: #222222;
-    color: white;
-
+.nav-links a:hover {
+  background-color: #222222;
+  color: #ffffff;
 }
 
+/* ===== MAIN SECTION ===== */
 .main-section {
-    display:flex;
-    justify-content: center;
-    align-items: center;
-    main-height: calc(100vh - 89px);
-
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 89px);
+  width: 100%;
+  background: #fff;
 }
 
 .main-section-wrapper {
-    display: flex;
-    gap: 55px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 55px;
+  max-width: 1200px;
+  padding: 0 65px;
+  width: 100%;
 }
+
+/* Contenido de texto */
 .main-content {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap:40px;
-
-
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 35px;
+  max-width: 550px;
 }
 
 .main-content > span {
-       font-family: "Poppins", sans-serif;
-       font-weight: 500;
-       font-size: 16px;
-       background: #F1F1F1;
-       padding: 15px 20px;
-       border-radius: 25px;
-       line-height: 16px;
-
+  font-weight: 500;
+  font-size: 16px;
+  background-color: #f1f1f1;
+  color: #222222;
+  padding: 12px 20px;
+  border-radius: 25px;
+  line-height: 1.2;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.08);
 }
 
-.main-title >h2,
-.main-title >h1{
-    font-size: 90px;
-    line-height: 100%;
-    font-weight: 900;
-    font-family: 'Satoshi', sans-serif;
+.main-title {
+  margin: 0;
+  padding: 0;
 }
 
-.main-title >h2 {
-     background:#fff000;
-     padding:5px 25px 20px 25px;
-     border-radius: 250px;
-     margin-top: 20px;
+.main-title h1 {
+  font-weight: 900;
+  font-size: 72px; /* más parecido al mockup */
+  line-height: 1;
+  margin: 0;
+  letter-spacing: -0.02em;
+  color: #000;
+}
 
-
+.main-title h2 {
+  font-weight: 900;
+  font-size: 72px;
+  background-color: #fff000; /* Amarillo Figma */
+  padding: 8px 30px 18px;
+  border-radius: 200px;
+  margin-top: 15px;
+  display: inline-block;
 }
 
 .main-content > p {
-        font-family: 'Satoshi', sans-serif;
-        font-size: 30px;
-        font-weight: 500;
-        color: #676767
+  font-weight: 500;
+  font-size: 22px;
+  color: #676767;
+  margin: 0;
+  line-height: 1.5;
+}
 
+/* Imagen principal */
+.main-section-wrapper figure {
+  margin: 0;
+  padding: 0;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.main-section-wrapper img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 16px; /* como en figma */
+  box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+  .main-section-wrapper {
+    flex-direction: column;
+    text-align: center;
+    gap: 40px;
+    padding: 0 32px;
+  }
+
+  .main-content {
+    align-items: center;
+  }
+
+  .main-title h1,
+  .main-title h2 {
+    font-size: 56px;
+  }
+
+  .main-content > p {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  header {
+    padding: 0 24px;
+  }
+
+  .nav-links {
+    gap: 14px;
+  }
+
+  .nav-links a {
+    font-size: 14px;
+    padding: 4px 12px;
+  }
+
+  .main-title h1,
+  .main-title h2 {
+    font-size: 42px;
+  }
+
+  .main-content > span {
+    font-size: 14px;
+    padding: 10px 14px;
+  }
+
+  .main-content > p {
+    font-size: 18px;
+  }
 }
