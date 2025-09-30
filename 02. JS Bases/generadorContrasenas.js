@@ -1,59 +1,79 @@
 function checkLongitud(longitud) {
-  /* TU CODIGO */
-if (!longitud) {
-  return "debe ingresar la longitud";
-}
+  /* Validación de la longitud */
+  if (!longitud) {
+    return "Debe ingresar la longitud";
+  }
 
-if (typeof longitud != "string") {
-  return "La longitud recibida no es valida";
-}
+  // Convertir a número si es string
+  if (typeof longitud === "string") {
+    longitud = parseInt(longitud);
+    if (isNaN(longitud)) {
+      return "La longitud recibida no es válida";
+    }
+  }
 
-  if (longitud > 3) {
+  // Verificar que sea un número
+  if (typeof longitud !== "number" || isNaN(longitud)) {
+    return "La longitud recibida no es válida";
+  }
+
+  // Validar que sea >= 3
+  if (longitud < 3) {
     return "La longitud debe ser mayor o igual que 3";
   }
 
-if (longitud > 10) {
-  return "La longitud debe ser mayor o igual que 10";
+  return longitud;
 }
 
-return longitud;
-
-}
-
-function generarContrasena(longitud, incluirEspeciales, incluirNumeros, incluirMayusculas ) {
-  /* TU CODIGO */
-
+function generarContrasena(longitud, incluirEspeciales, incluirNumeros, incluirMayusculas) {
+  /* Variables según requisitos */
   var letras = 'abcdefghijklmnopqrstuvwxyz';
-
   var numeros = '0123456789';
-
   var especiales = '!@#$%^&*()_+-=[]{}|;:,.<>?';
-
   var letrasMayusculas = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
+  // e. Variable que guarda solo letras (contraseña normal)
   var caracteresDisponibles = letras;
 
+  // f. Si desea especiales → agregar
   if (incluirEspeciales === true) {
-      caracteresDisponibles = caracteresDisponibles + especiales;
+    caracteresDisponibles = caracteresDisponibles + especiales;
   }
 
+  // g. Si desea números → agregar
   if (incluirNumeros === true) {
-      caracteresDisponibles = caracteresDisponibles + numeros;
+    caracteresDisponibles = caracteresDisponibles + numeros;
   }
 
+  // h. Si desea mayúsculas → agregar
   if (incluirMayusculas === true) {
-      caracteresDisponibles = caracteresDisponibles + letrasMayusculas;
+    caracteresDisponibles = caracteresDisponibles + letrasMayusculas;
   }
 
+  // i. Contraseña final, inicializada vacía
   var contraseña = "";
 
-  for (var i = 0; i < longitud; i++) {
-    const indice = Math.floor(Math.random() * caracteresDisponibles.length);
-    const caracter = caracteresDisponibles.charAt(indice)
-    contraseña = contraseña + caracter;
+  // j. Condición: si longitud >= 3
+  if (longitud >= 3) {
+    // Generar los primeros 3 caracteres obligatorios
+    for (var i = 0; i < 3; i++) {
+      var indice = Math.floor(Math.random() * caracteresDisponibles.length);
+      var caracter = caracteresDisponibles.charAt(indice);
+      contraseña = contraseña + caracter;
+    }
+
+    // k. Si la longitud es mayor a 3, agregar más caracteres
+    for (var i = 3; i < longitud; i++) {
+      var indice = Math.floor(Math.random() * caracteresDisponibles.length);
+      var caracter = caracteresDisponibles.charAt(indice);
+      contraseña = contraseña + caracter;
+    }
+  } else {
+    // Si no cumple la condición, devolver mensaje de error
+    return "La longitud debe ser mayor o igual que 3";
   }
 
-
+  // Devolver mensaje final
   return "Contraseña generada: " + contraseña;
 }
 
