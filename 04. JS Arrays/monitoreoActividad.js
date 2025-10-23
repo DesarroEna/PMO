@@ -1,65 +1,76 @@
-// <------- Arreglo de actividades sospechozas -----> modificar el valor de ser necesario
-var actividadesSospechozas = [];
+// Array vacío que guardará las actividades sospechosas
+var actividadesSospechosas = [];
 
-function agregarActividad(descripcion, nivelRiesgo){
-    /* TU CODIGO */
-    if (!descripcion || !nivelRiesgo) {
-        return "Descripción o nivel de riesgo no valido";
-     }
-    if (nivelRiesgo != "bajo" && nivelRiesgo != "medio" && nivelRiesgo != "alto"){
-        return "Nivel de riesgo no valido, el nivel debe ser : bajo, medio, o alto";
+function agregarActividad(descripcion, nivelRiesgo) {
+    // a. Validar que no sean strings vacíos
+    if (!descripcion || !nivelRiesgo || descripcion.trim() === "" || nivelRiesgo.trim() === "") {
+        return "Descripcion o nivel de riesgo no valido";
     }
-    actividadesSospechozas.push("Descripción: " + descripcion + ", riesgo - " + nivelRiesgo);
 
-    return ("Actividad: " + descripción + "  con Nivel de riego: " + nivelRiesgo + "fue agregada con exito");
+    // b. Validar nivel de riesgo
+    if (nivelRiesgo !== "bajo" && nivelRiesgo !== "medio" && nivelRiesgo !== "alto") {
+        return "Nivel de riesgo no valido, el nivel debe ser: bajo, medio o alto";
+    }
+
+    // c. Agregar al array con el formato especificado
+    actividadesSospechosas.push("Descripcion: '" + descripcion + "', Riesgo - '" + nivelRiesgo + "'");
+
+    // d. Retornar mensaje de éxito
+    return "Actividad: '" + descripcion + "' con Nivel de riesgo: '" + nivelRiesgo + "' fue agregada con exito";
 }
 
-function eliminarActividad(indice){
-    /* TU CODIGO */
-    if (typeof indice != "Number") {
+function eliminarActividadSospechosa(indice) {
+    // a. Validar que sea de tipo number
+    if (typeof indice !== "number") {
         return "El indice no es valido, debe ser un numero";
     }
 
-    if (indice < 0 || indice > actividadesSospechozas.length){
-        return "El indice no es valido, se encuentra fuera de rango";
+    // b. Validar rango (0 a length - 1)
+    if (indice < 0 || indice >= actividadesSospechosas.length) {
+        return "El indice no es valido, se encuentra fuera del rango";
     }
-    actividadesSospechozas.splice(indice, 1);
+
+    // c. Eliminar y retornar éxito
+    actividadesSospechosas.splice(indice, 1);
     return "Actividad eliminada con exito";
 }
 
-function filtrarActividadesPorRiesgo(nivelRiesgo){
-    /* TU CODIGO */
-    if (!nivelRiesgo){
+function filtrarActividadesPorRiesgo(nivelRiesgo) {
+    // a. Validar que no sea string vacío
+    if (!nivelRiesgo || nivelRiesgo.trim() === "") {
         return "Nivel de riesgo no valido";
     }
 
-        if (nivelRiesgo != "bajo" && nivelRiesgo != "medio" && nivelRiesgo != "alto"){
-        return "Nivel de riesgo no valido, el nivel debe ser : bajo, medio, o alto";
+    // b. Validar valor permitido
+    if (nivelRiesgo !== "bajo" && nivelRiesgo !== "medio" && nivelRiesgo !== "alto") {
+        return "Nivel de riesgo no valido, el nivel debe ser: bajo, medio o alto";
     }
 
-    var filtrado = actividadesSospechozas.filter(function (Actividad){
-        return Actividad.includes(nivelRiesgo);
+    // c. Filtrar usando callback 
+    var actividadesFiltradas = actividadesSospechosas.filter(function(actividad) {
+        return actividad.includes("'" + nivelRiesgo + "'");
     });
 
-    if (!filtrado.length){
+    // Si no hay resultados
+    if (actividadesFiltradas.length === 0) {
         return "No hay actividades con este nivel de riesgo";
     }
 
-    return filtrado;
+    return actividadesFiltradas;
 }
 
-function generarReporteDeActividades(){
-    /* TU CODIGO */
-    
-    var actividades = actividadesSospechozas.map(function (Actividad, index) {
-        return "Id: " + index + ", " + Actividad;
-    });
-
-    if (!actividades.length) {
+function generarReportedeActividades() {
+    // a. Si no hay actividades
+    if (actividadesSospechosas.length === 0) {
         return "No hay actividades para mostrar";
     }
 
-    return actividades;
+    // b. Generar reporte con Id 
+    var reporte = actividadesSospechosas.map(function(actividad, index) {
+        return "Id: " + index + ", " + actividad;
+    });
+
+    return reporte;
 }
 
 // <------- NO TOCAR -------->
