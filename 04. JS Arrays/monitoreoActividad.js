@@ -1,77 +1,80 @@
-// Array vacío que guardará las actividades sospechosas
-var actividadesSospechosas = [];
+// Estructura predefinida de perfiles (ejemplo del enunciado)
+var perfiles = [
+  { usuario: "Alice", codigo: 1234, nivel_de_autorizacion: "bajo", antiguedad: 12 },
+  { usuario: "Bob", codigo: 5678, nivel_de_autorizacion: "medio", antiguedad: 24 },
+  { usuario: "Charlie", codigo: 9101, nivel_de_autorizacion: "alto", antiguedad: 36 },
+  { usuario: "Diana", codigo: 1122, nivel_de_autorizacion: "admin", antiguedad: 48 },
+];
 
-function agregarActividad(descripcion, nivelRiesgo) {
-    // a. Validar que no sean strings vacíos
-    if (!descripcion || !nivelRiesgo || descripcion.trim() === "" || nivelRiesgo.trim() === "") {
-        return "Descripcion o nivel de riesgo no valido";
+// Objeto "asistente" con los métodos requeridos
+var asistente = {
+  verPerfiles: function(opcion) {
+    // Validar que la opción sea una de las permitidas
+    const opcionesValidas = ["todo", "nombre", "codigo", "nivel", "antiguedad"];
+    if (!opcion || !opcionesValidas.includes(opcion)) {
+      return []; // No se muestra información si no hay opción válida
     }
 
-    // b. Validar nivel de riesgo
-    if (nivelRiesgo !== "bajo" && nivelRiesgo !== "medio" && nivelRiesgo !== "alto") {
-        return "Nivel de riesgo no valido, el nivel debe ser: bajo, medio o alto";
+    // Mapear según la opción
+    switch (opcion) {
+      case "todo":
+        // Devuelve copia de los objetos completos (sin modificar el original)
+        return perfiles.map(perfil => ({ ...perfil }));
+      case "nombre":
+        return perfiles.map(perfil => perfil.usuario);
+      case "codigo":
+        return perfiles.map(perfil => perfil.codigo);
+      case "nivel":
+        return perfiles.map(perfil => perfil.nivel_de_autorizacion);
+      case "antiguedad":
+        return perfiles.map(perfil => perfil.antiguedad);
+      default:
+        return [];
+    }
+  },
+
+  verPerfilesPorAntiguedad: function() {
+    // Ordenar de mayor a menor antigüedad SIN modificar el array original
+    return perfiles
+      .map(perfil => ({ ...perfil })) // crear copia profunda simple
+      .sort((a, b) => b.antiguedad - a.antiguedad);
+  },
+
+  verAdministradores: function() {
+    // Filtrar solo perfiles con nivel "admin"
+    return perfiles
+      .filter(perfil => perfil.nivel_de_autorizacion === "admin")
+      .map(perfil => ({ ...perfil })); // devolver copias
+  },
+
+  modificarAcceso: function(usuario, nuevoCodigo) {
+    // Validar que el usuario no sea vacío
+    if (!usuario || typeof usuario !== "string" || usuario.trim() === "") {
+      return "usuario no encontrado";
     }
 
-    // c. Agregar al array con el formato especificado
-    actividadesSospechosas.push("Descripcion: '" + descripcion + "', Riesgo - '" + nivelRiesgo + "'");
-
-    // d. Retornar mensaje de éxito
-    return "Actividad: '" + descripcion + "' con Nivel de riesgo: '" + nivelRiesgo + "' fue agregada con exito";
-}
-
-function eliminarActividadSospechosa(indice) {
-    // a. Validar que sea de tipo number
-    if (typeof indice !== "number") {
-        return "El indice no es valido, debe ser un numero";
+    // Validar que el nuevo código sea un número de 4 dígitos
+    if (
+      typeof nuevoCodigo !== "number" ||
+      nuevoCodigo < 1000 ||
+      nuevoCodigo > 9999 ||
+      !Number.isInteger(nuevoCodigo)
+    ) {
+      return "codigo de acceso invalido, debe contener solo 4 numeros";
     }
 
-    // b. Validar rango (0 a length - 1)
-    if (indice < 0 || indice >= actividadesSospechosas.length) {
-        return "El indice no es valido, se encuentra fuera del rango";
+    // Buscar el usuario en el array
+    const perfil = perfiles.find(p => p.usuario === usuario);
+
+    if (!perfil) {
+      return "usuario no encontrado";
     }
 
-    // c. Eliminar y retornar éxito
-    actividadesSospechosas.splice(indice, 1);
-    return "Actividad eliminada con exito";
-}
-
-function filtrarActividadesPorRiesgo(nivelRiesgo) {
-    // a. Validar que no sea string vacío
-    if (!nivelRiesgo || nivelRiesgo.trim() === "") {
-        return "Nivel de riesgo no valido";
-    }
-
-    // b. Validar valor permitido
-    if (nivelRiesgo !== "bajo" && nivelRiesgo !== "medio" && nivelRiesgo !== "alto") {
-        return "Nivel de riesgo no valido, el nivel debe ser: bajo, medio o alto";
-    }
-
-    // c. Filtrar usando callback 
-    var actividadesFiltradas = actividadesSospechosas.filter(function(actividad) {
-        return actividad.includes("'" + nivelRiesgo + "'");
-    });
-
-    // Si no hay resultados
-    if (actividadesFiltradas.length === 0) {
-        return "No hay actividades con este nivel de riesgo";
-    }
-
-    return actividadesFiltradas;
-}
-
-function generarReportedeActividades() {
-    // a. Si no hay actividades
-    if (actividadesSospechosas.length === 0) {
-        return "No hay actividades para mostrar";
-    }
-
-    // b. Generar reporte con Id 
-    var reporte = actividadesSospechosas.map(function(actividad, index) {
-        return "Id: " + index + ", " + actividad;
-    });
-
-    return reporte;
-}
+    // Actualizar el código
+    perfil.codigo = nuevoCodigo;
+    return "codigo de acceso modificado";
+  }
+};
 
 // <------- NO TOCAR -------->
 module.exports = {
