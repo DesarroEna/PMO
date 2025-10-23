@@ -1,54 +1,54 @@
 // <----- NO TOCAR ------->
-const { perfiles } = require("../build/js/perfiles.js")
+const { perfiles } = require("../build/js/perfiles.js");
 
 var asistente = {
-    verPerfiles: function(opcion){
-        /* TU CODIGO */
- verPerfiles: function(opcion) {
-    if (opcion === "todo") {
-      return perfiles;
-    } else if (opcion === "usuario") {
-      return perfiles.map((perfil) => perfil.usuario);
-    } else if (opcion === "codigo") {
-      return perfiles.map((perfil) => perfil.codigo);
-    } else if (opcion === "nivel_de_autorizacion") {
-      return perfiles.map((perfil) => perfil.nivel_de_autorizacion);
-    } else if (opcion === "antiguedad") {
-      return perfiles.map((perfil) => perfil.antiguedad);
-    }
-  };
-      
+    verPerfiles: function(opcion) {
+        if (opcion === "todo") {
+            return perfiles;
+        } else if (opcion === "nombre") {
+            return perfiles.map(perfil => perfil.usuario);
+        } else if (opcion === "codigo") {
+            return perfiles.map(perfil => perfil.codigo);
+        } else if (opcion === "nivel") {
+            return perfiles.map(perfil => perfil.nivel_de_autorizacion);
+        } else if (opcion === "antiguedad") {
+            return perfiles.map(perfil => perfil.antiguedad);
+        }
+        // Si la opción no es válida, no se debe visualizar información
+        return [];
     },
-    
-    verPerfilesPorAntiguedad: function(){
-        /* TU CODIGO */
+
+    verPerfilesPorAntiguedad: function() {
         return [...perfiles].sort((a, b) => b.antiguedad - a.antiguedad);
-  },
-        
     },
 
-    verAdministradores: function(){
-        /* TU CODIGO */
-        return perfiles.filter((perfil) => perfil.nivel_de_autorizacion === "admin");
-  },
+    verAdministradores: function() {
+        return perfiles.filter(perfil => perfil.nivel_de_autorizacion === "admin");
+    },
 
+    modificarAcceso: function(usuario, codigo) {
+        // Validar que el usuario no sea string vacío
+        if (usuario === "" || typeof usuario !== "string") {
+            return "usuario no encontrado";
+        }
 
+        // Buscar el perfil
+        const perfil = perfiles.find(p => p.usuario === usuario);
+        if (!perfil) {
+            return "usuario no encontrado";
+        }
 
-    modificarAcceso: function(usuario, codigo){
-        /* TU CODIGO */
-    if (typeof codigo !== 'number' || codigo < 1000 || codigo > 9999) {
-      return "codigo de acceso invalido, debe contener solo 4 numeros";
+        // Validar el código: debe ser 4 dígitos numéricos
+        const codigoStr = String(codigo);
+        if (!/^\d{4}$/.test(codigoStr)) {
+            return "codigo de acceso invalido, debe contener solo 4 numeros";
+        }
+
+        // Actualizar el código (guardamos como número para mantener consistencia con el ejemplo)
+        perfil.codigo = Number(codigoStr);
+        return "codigo de acceso modificado";
     }
-
-    var perfilModificado = perfiles.find((perfil) => perfil.usuario === usuario);
-
-    if (!perfilModificado) {
-      return "usuario no encontrado";
-    }
-
-    perfilModificado.codigo = codigo;
-    return "codigo de acceso modificado";
-  };
+};
         
     
 
