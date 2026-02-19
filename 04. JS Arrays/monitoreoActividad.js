@@ -1,80 +1,104 @@
-// Estructura predefinida de perfiles (ejemplo del enunciado)
+// ================================
+// ESTRUCTURA DE PERFILES
+// ================================
 var perfiles = [
   { usuario: "Alice", codigo: 1234, nivel_de_autorizacion: "bajo", antiguedad: 12 },
   { usuario: "Bob", codigo: 5678, nivel_de_autorizacion: "medio", antiguedad: 24 },
   { usuario: "Charlie", codigo: 9101, nivel_de_autorizacion: "alto", antiguedad: 36 },
-  { usuario: "Diana", codigo: 1122, nivel_de_autorizacion: "admin", antiguedad: 48 },
+  { usuario: "Diana", codigo: 1122, nivel_de_autorizacion: "admin", antiguedad: 48 }
 ];
 
-// Objeto "asistente" con los métodos requeridos
+// ================================
+// OBJETO ASISTENTE
+// ================================
 var asistente = {
-  verPerfiles: function(opcion) {
-    // Validar que la opción sea una de las permitidas
-    const opcionesValidas = ["todo", "nombre", "codigo", "nivel", "antiguedad"];
-    if (!opcion || !opcionesValidas.includes(opcion)) {
-      return []; // No se muestra información si no hay opción válida
+
+  verPerfiles: function (opcion) {
+    var opcionesValidas = ["todo", "nombre", "codigo", "nivel", "antiguedad"];
+
+    if (!opcion || opcionesValidas.indexOf(opcion) === -1) {
+      return [];
     }
 
-    // Mapear según la opción
-    switch (opcion) {
-      case "todo":
-        // Devuelve copia de los objetos completos (sin modificar el original)
-        return perfiles.map(perfil => ({ ...perfil }));
-      case "nombre":
-        return perfiles.map(perfil => perfil.usuario);
-      case "codigo":
-        return perfiles.map(perfil => perfil.codigo);
-      case "nivel":
-        return perfiles.map(perfil => perfil.nivel_de_autorizacion);
-      case "antiguedad":
-        return perfiles.map(perfil => perfil.antiguedad);
-      default:
-        return [];
+    if (opcion === "todo") {
+      return perfiles.map(function (perfil) {
+        return {
+          usuario: perfil.usuario,
+          codigo: perfil.codigo,
+          nivel_de_autorizacion: perfil.nivel_de_autorizacion,
+          antiguedad: perfil.antiguedad
+        };
+      });
     }
+
+    return perfiles.map(function (perfil) {
+      switch (opcion) {
+        case "nombre":
+          return perfil.usuario;
+        case "codigo":
+          return perfil.codigo;
+        case "nivel":
+          return perfil.nivel_de_autorizacion;
+        case "antiguedad":
+          return perfil.antiguedad;
+        default:
+          return null;
+      }
+    });
   },
 
-  verPerfilesPorAntiguedad: function() {
-    // Ordenar de mayor a menor antigüedad SIN modificar el array original
+  verPerfilesPorAntiguedad: function () {
     return perfiles
-      .map(perfil => ({ ...perfil })) // crear copia profunda simple
-      .sort((a, b) => b.antiguedad - a.antiguedad);
+      .map(function (perfil) {
+        return {
+          usuario: perfil.usuario,
+          codigo: perfil.codigo,
+          nivel_de_autorizacion: perfil.nivel_de_autorizacion,
+          antiguedad: perfil.antiguedad
+        };
+      })
+      .sort(function (a, b) {
+        return b.antiguedad - a.antiguedad;
+      });
   },
 
-  verAdministradores: function() {
-    // Filtrar solo perfiles con nivel "admin"
+  verAdministradores: function () {
     return perfiles
-      .filter(perfil => perfil.nivel_de_autorizacion === "admin")
-      .map(perfil => ({ ...perfil })); // devolver copias
+      .filter(function (perfil) {
+        return perfil.nivel_de_autorizacion === "admin";
+      })
+      .map(function (perfil) {
+        return {
+          usuario: perfil.usuario,
+          codigo: perfil.codigo,
+          nivel_de_autorizacion: perfil.nivel_de_autorizacion,
+          antiguedad: perfil.antiguedad
+        };
+      });
   },
 
-  modificarAcceso: function(usuario, nuevoCodigo) {
-    // Validar que el usuario no sea vacío
+  modificarAcceso: function (usuario, nuevoCodigo) {
     if (!usuario || typeof usuario !== "string" || usuario.trim() === "") {
       return "usuario no encontrado";
     }
 
-    // Validar que el nuevo código sea un número de 4 dígitos
-    if (
-      typeof nuevoCodigo !== "number" ||
-      nuevoCodigo < 1000 ||
-      nuevoCodigo > 9999 ||
-      !Number.isInteger(nuevoCodigo)
-    ) {
+    var codigo = Number(nuevoCodigo);
+
+    if (!Number.isInteger(codigo) || codigo < 1000 || codigo > 9999) {
       return "codigo de acceso invalido, debe contener solo 4 numeros";
     }
 
-    // Buscar el usuario en el array
-    const perfil = perfiles.find(p => p.usuario === usuario);
-
-    if (!perfil) {
-      return "usuario no encontrado";
+    for (var i = 0; i < perfiles.length; i++) {
+      if (perfiles[i].usuario === usuario) {
+        perfiles[i].codigo = codigo;
+        return "codigo de acceso modificado";
+      }
     }
 
-    // Actualizar el código
-    perfil.codigo = nuevoCodigo;
-    return "codigo de acceso modificado";
+    return "usuario no encontrado";
   }
 };
+
 
 // <------- NO TOCAR -------->
 module.exports = {
