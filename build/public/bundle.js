@@ -11,71 +11,61 @@
 // VALIDACIÓN DE LONGITUD
 // ================================
 function checkLongitud(longitud) {
-  // Si no se recibe longitud
+  // Validación temprana: entrada vacía o nula
   if (longitud === undefined || longitud === null || longitud === "") {
     return "Debe ingresar la longitud";
   }
 
-  // Convertir a número
+  // Convertir a número y validar tipo
   const longitudNumero = Number(longitud);
 
-  // Verificar que sea un número válido
-  if (!Number.isInteger(longitudNumero)) {
+if (!Number.isInteger(longitudNumero)) {
     return "La longitud recibida no es válida";
   }
 
-  // Mínimo
+  // Validar rango permitido [3, 10]
   if (longitudNumero < 3) {
     return "La longitud debe ser mayor o igual a 3";
   }
 
-  // Máximo
-  if (longitudNumero > 10) {
+ if (longitudNumero > 10) {
     return "La longitud debe ser menor o igual a 10";
   }
 
+  // Todo OK: retornar el número válido
   return longitudNumero;
 }
 
 // ================================
-// GENERADOR DE CONTRASEÑA
+// GENERADOR DE CONTRASEÑA (Lógica pura)
 // ================================
-function generarContrasena(
+function generarContraseña(
   longitud,
   incluirEspeciales,
   incluirNumeros,
   incluirMayusculas
 ) {
+  // Conjuntos de caracteres
   const letras = "abcdefghijklmnopqrstuvwxyz";
   const numeros = "0123456789";
   const especiales = "!@#$%^&*()_+-=[]{}|;:,.<>?";
   const letrasMayusculas = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
+  // Construir pool de caracteres disponibles
   let caracteresDisponibles = letras;
+  if (incluirEspeciales) caracteresDisponibles += especiales;
+  if (incluirNumeros) caracteresDisponibles += numeros;
+  if (incluirMayusculas) caracteresDisponibles += letrasMayusculas;
 
-  if (incluirEspeciales === true) {
-    caracteresDisponibles += especiales;
-  }
-
-  if (incluirNumeros === true) {
-    caracteresDisponibles += numeros;
-  }
-
-  if (incluirMayusculas === true) {
-    caracteresDisponibles += letrasMayusculas;
-  }
-
-  let contrasena = "";
-
+  // Generar contraseña carácter por carácter
+  let contraseña = "";
   for (let i = 0; i < longitud; i++) {
-    const indice = Math.floor(
-      Math.random() * caracteresDisponibles.length
-    );
-    contrasena += caracteresDisponibles.charAt(indice);
+    const indice = Math.floor(Math.random() * caracteresDisponibles.length);
+    contraseña += caracteresDisponibles.charAt(indice);
   }
 
-  return "Contraseña generada: " + contrasena;
-}
+  return contraseña;
+};
 
 
 // <------- NO TOCAR -------->
